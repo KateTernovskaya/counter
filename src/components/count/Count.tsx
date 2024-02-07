@@ -10,11 +10,10 @@ export type CountProps = {
     resetDisabled: boolean
     maxNumber: number
     error: boolean
-    help: boolean
+   // help: boolean
 }
 
 export const Count = (props: CountProps) => {
-    console.log(props.count)
     const intCountHandler = () => {
         props.incCount(props.count)
     }

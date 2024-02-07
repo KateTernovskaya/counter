@@ -4,7 +4,6 @@ import {Count} from "./components/count/Count";
 import {CountSet} from "./components/countSet/CountSet";
 
 
-
 function App() {
     const [plusDisabled, setPlusDisabled] = useState<boolean>(false)
     const [resetDisabled, setResetDisabled] = useState<boolean>(true)
@@ -27,47 +26,27 @@ function App() {
     }
 
     //SetCount
-    const [settingsDisabled, setSettingsDisabled] = useState<boolean>(true)
     const [maxValue, setMaxValue] = useState<number>(1)
     const [startValue, setStartValue] = useState<number>(0)
     const [count, setCount] = useState<number>(startValue)
-    const [error, setError] = useState<boolean>(false)
-    const [help, setHelp] = useState<boolean>(false)
+
+    const error = startValue < 0 || startValue >= maxValue
+    const settingsDisabled =  error
 
     const setBtnOnclickHandler = () => {
         console.log('click')
         setMaxValue(maxValue)
         setStartValue(startValue)
         setCount(startValue)
-        setHelp(false)
     }
 
     const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setSettingsDisabled(false)
-        const inputValue = +e.currentTarget.value
-
-        if (inputValue <= startValue) {
-            setError(true)
-            setSettingsDisabled(true)
-        } else {
-            setMaxValue(inputValue)
-            setError(false)
-            setHelp(true)
-        }
+        setMaxValue(+e.currentTarget.value)
     }
     const setStartValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setSettingsDisabled(false)
-        const inputValue = +e.currentTarget.value
-
-        if (inputValue < 0 || inputValue >= maxValue) {
-            setError(true)
-            setSettingsDisabled(true)
-        } else {
-            setStartValue(inputValue)
-            setError(false)
-            setHelp(true)
-        }
+        setStartValue(+e.currentTarget.value)
     }
+
 
 
     return (
@@ -88,7 +67,6 @@ function App() {
                    resetDisabled={resetDisabled}
                    maxNumber={maxValue}
                    error={error}
-                   help={help}
             />
         </div>
     )
