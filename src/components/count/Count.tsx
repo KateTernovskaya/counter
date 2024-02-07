@@ -10,7 +10,7 @@ export type CountProps = {
     resetDisabled: boolean
     maxNumber: number
     error: boolean
-   // help: boolean
+    viewHelp: boolean
 }
 
 export const Count = (props: CountProps) => {
@@ -21,12 +21,22 @@ export const Count = (props: CountProps) => {
         props.resetCount()
     }
     const countIsMaximal = props.count === props.maxNumber
-    const isError = props.error ? props.error && <p style={{color: 'red', fontSize: '24px'}}>
-        Incorrect value! <br/> The value cannot be lower than 0, or higher than the max value</p> : props.count
+
+    const showText = () => {
+        if (props.error) {
+            return <p style={{color: 'red', fontSize: '24px'}}>
+                Incorrect value! <br/> The value cannot be lower than 0, or higher than the max value</p>
+        } else if (props.viewHelp) {
+            return <p style={{fontSize: '24px'}}>
+                Enter values and press 'set'</p>
+        } else {
+            return <span>{props.count}</span>
+        }
+    }
 
     return (
         <S.Count>
-            <S.CountNumber className={`count ${countIsMaximal ? 'red' : ''}`}>{isError}</S.CountNumber>
+            <S.CountNumber className={`count ${countIsMaximal ? 'red' : ''}`}>{showText()}</S.CountNumber>
 
             <S.BtnBlock>
                 <Button content={'+'}

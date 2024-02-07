@@ -41,6 +41,3 @@ export const CountSet: React.FC<CountSetPropsType> = (
         </S.CountSet>
     );
 };
-
-
-

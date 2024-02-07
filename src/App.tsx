@@ -3,10 +3,13 @@ import './App.css';
 import {Count} from "./components/count/Count";
 import {CountSet} from "./components/countSet/CountSet";
 
-
 function App() {
     const [plusDisabled, setPlusDisabled] = useState<boolean>(false)
     const [resetDisabled, setResetDisabled] = useState<boolean>(true)
+    const [maxValue, setMaxValue] = useState<number>(1)
+    const [startValue, setStartValue] = useState<number>(0)
+    const [count, setCount] = useState<number>(startValue)
+    const [viewHelp, setViewHelp] = useState<boolean>(false)
 
     //Count
     const incCount = (num: number) => {
@@ -25,10 +28,14 @@ function App() {
         setResetDisabled(true)
     }
 
-    //SetCount
-    const [maxValue, setMaxValue] = useState<number>(1)
-    const [startValue, setStartValue] = useState<number>(0)
-    const [count, setCount] = useState<number>(startValue)
+    const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setMaxValue(+e.currentTarget.value)
+        setViewHelp(true)
+    }
+    const setStartValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setStartValue(+e.currentTarget.value)
+        setViewHelp(true)
+    }
 
     const error = startValue < 0 || startValue >= maxValue
     const settingsDisabled =  error
@@ -38,16 +45,8 @@ function App() {
         setMaxValue(maxValue)
         setStartValue(startValue)
         setCount(startValue)
+        setViewHelp(false)
     }
-
-    const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMaxValue(+e.currentTarget.value)
-    }
-    const setStartValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setStartValue(+e.currentTarget.value)
-    }
-
-
 
     return (
         <div className="App">
@@ -67,6 +66,7 @@ function App() {
                    resetDisabled={resetDisabled}
                    maxNumber={maxValue}
                    error={error}
+                   viewHelp={viewHelp}
             />
         </div>
     )
