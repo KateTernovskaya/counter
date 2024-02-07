@@ -1,9 +1,8 @@
 import React, {ChangeEvent, useState} from 'react';
 import './App.css';
-import {Count} from "./components/Count";
+import {Count} from "./components/count/Count";
 import {CountSet} from "./components/countSet/CountSet";
-import {Simulate} from "react-dom/test-utils";
-import click = Simulate.click;
+
 
 
 function App() {

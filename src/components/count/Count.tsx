@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button} from "./Button";
-import styled from "styled-components";
+import {Button} from "../button/Button";
+import {S} from './Count_Styles'
 
 export type CountProps = {
     incCount: (num: number) => void
@@ -26,10 +26,10 @@ export const Count = (props: CountProps) => {
         Incorrect value! <br/> The value cannot be lower than 0, or higher than the max value</p> : props.count
 
     return (
-        <StyledCount>
-            <CountNumber className={`count ${countIsMaximal ? 'red' : ''}`}>{isError}</CountNumber>
+        <S.Count>
+            <S.CountNumber className={`count ${countIsMaximal ? 'red' : ''}`}>{isError}</S.CountNumber>
 
-            <BtnBlock>
+            <S.BtnBlock>
                 <Button content={'+'}
                         onClickHandler={intCountHandler}
                         isDisabled={props.plusDisabled}
@@ -38,44 +38,7 @@ export const Count = (props: CountProps) => {
                         onClickHandler={resetCountHandler}
                         isDisabled={props.resetDisabled}
                 />
-            </BtnBlock>
-        </StyledCount>
+            </S.BtnBlock>
+        </S.Count>
     );
 };
-
-const StyledCount = styled.div`
-  width: 500px;
-  background-color: rgb(45, 126, 117);
-  border-radius: 10px;
-`
-const CountNumber = styled.span`
-  background-color: white;
-  margin: 30px;
-  height: 200px;
-  color: rgb(45, 126, 117);
-  font-size: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  
-  &.red {
-    color: red;
-  }
-  
-  p{
-    text-align: center;
-  }
-`
-
-export const BtnBlock = styled.div`
-  background-color: white;
-  padding: 20px;
-  margin: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  gap: 70px;
-`
-

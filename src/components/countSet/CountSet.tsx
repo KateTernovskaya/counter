@@ -1,10 +1,7 @@
 import React, {ChangeEvent} from 'react';
-import styled from "styled-components";
-import {BtnBlock} from "../Count";
-import {Button} from "../Button";
+import {Button} from "../button/Button";
 import {CountSetValue} from "./CountSetValue";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
+import {S} from './CountSet_Styles'
 
 type CountSetPropsType = {
     settingsDisabled: boolean
@@ -24,8 +21,8 @@ export const CountSet: React.FC<CountSetPropsType> = (
     }) => {
 
      return (
-        <StyledCountSet>
-            <SetBlock>
+        <S.CountSet>
+            <S.SetBlock>
                 <CountSetValue title={'max value'}
                                value={maxValue}
                                onChange={setMaxValueHandler}
@@ -34,32 +31,16 @@ export const CountSet: React.FC<CountSetPropsType> = (
                                value={startValue}
                                onChange={setStartValueHandler}
                                error={error}/>
-            </SetBlock>
-            <BtnBlock>
+            </S.SetBlock>
+            <S.BtnBlock>
                 <Button content={'set'}
                         onClickHandler={setBtnOnclickHandler}
                         isDisabled={settingsDisabled}
                 />
-            </BtnBlock>
-        </StyledCountSet>
+            </S.BtnBlock>
+        </S.CountSet>
     );
 };
 
-const StyledCountSet = styled.div`
-  width: 500px;
-  background-color: rgb(45, 126, 117);
-  border-radius: 10px;
-`
 
-const SetBlock = styled.div`
-  background-color: white;
-  margin: 30px;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
-  border-radius: 10px;
-  font-size: 20px;
-`
 
