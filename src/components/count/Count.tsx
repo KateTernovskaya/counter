@@ -27,7 +27,7 @@ export const Count = (props: CountProps) => {
             return <p style={{color: 'red', fontSize: '24px'}}>
                 Incorrect value! <br/> The value cannot be lower than 0, or higher than the max value</p>
         } else if (props.viewHelp) {
-            return <p style={{fontSize: '24px'}}>
+            return <p style={{color: 'rgb(45, 126, 117)', fontSize: '24px'}}>
                 Enter values and press 'set'</p>
         } else {
             return <span>{props.count}</span>

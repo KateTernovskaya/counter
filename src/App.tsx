@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import {Count} from "./components/count/Count";
 import {CountSet} from "./components/countSet/CountSet";
@@ -10,6 +10,26 @@ function App() {
     const [startValue, setStartValue] = useState<number>(0)
     const [count, setCount] = useState<number>(startValue)
     const [viewHelp, setViewHelp] = useState<boolean>(false)
+
+    //Get From LocalStorage
+    useEffect(() => {
+        maxValueGetFromLocalStorage()
+        startValueGetFromLocalStorage()
+    }, [])
+
+    const maxValueGetFromLocalStorage = () => {
+        const maxV = localStorage.getItem('maxValue')
+        if (maxV) {
+            setMaxValue(JSON.parse(maxV))
+        }
+    }
+    const startValueGetFromLocalStorage = () => {
+        const startV = localStorage.getItem('startValue')
+        if (startV) {
+            setStartValue(JSON.parse(startV))
+        }
+    }
+
 
     //Count
     const incCount = (num: number) => {
@@ -31,14 +51,18 @@ function App() {
     const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setMaxValue(+e.currentTarget.value)
         setViewHelp(true)
+        setPlusDisabled(true)
+        setResetDisabled(true)
     }
     const setStartValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setStartValue(+e.currentTarget.value)
         setViewHelp(true)
+        setPlusDisabled(true)
+        setResetDisabled(true)
     }
 
     const error = startValue < 0 || startValue >= maxValue
-    const settingsDisabled =  error
+    const settingsDisabled = error
 
     const setBtnOnclickHandler = () => {
         console.log('click')
@@ -46,6 +70,12 @@ function App() {
         setStartValue(startValue)
         setCount(startValue)
         setViewHelp(false)
+        setPlusDisabled(false)
+        setResetDisabled(true)
+
+        //localStorage
+        localStorage.setItem('maxValue', JSON.stringify(maxValue))
+        localStorage.setItem('startValue', JSON.stringify(startValue))
     }
 
     return (

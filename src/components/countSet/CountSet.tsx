@@ -20,7 +20,7 @@ export const CountSet: React.FC<CountSetPropsType> = (
         setBtnOnclickHandler,
     }) => {
 
-     return (
+    return (
         <S.CountSet>
             <S.SetBlock>
                 <CountSetValue title={'max value'}
