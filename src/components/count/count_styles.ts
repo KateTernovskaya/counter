@@ -16,13 +16,22 @@ const CountNumber = styled.span`
   justify-content: center;
   border-radius: 10px;
 
+  &.help {
+    text-align: center;
+    font-size: 24px;
+    color: rgb(45, 126, 117);
+  }
+
+  &.error {
+    text-align: center;
+    font-size: 24px;
+    color: red;
+  }
+
   &.red {
     color: red;
   }
 
-  p {
-    text-align: center;
-  }
 `
 
 const BtnBlock = styled.div`

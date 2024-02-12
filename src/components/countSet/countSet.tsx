@@ -4,25 +4,23 @@ import {CountSetValue} from "./countSetValue";
 import {S} from './countSet_styles'
 
 type CountSetPropsType = {
-    settingsDisabled: boolean
     maxValue: number
     startValue: number
     setMaxValueHandler: ChangeEventHandler<HTMLInputElement>
     setStartValueHandler: ChangeEventHandler<HTMLInputElement>
-    error: boolean
     setBtnOnclickHandler: () => void
 }
 
 export const CountSet: React.FC<CountSetPropsType> = (
     {
-        settingsDisabled,
         maxValue,
         startValue,
         setMaxValueHandler,
         setStartValueHandler,
-        error,
         setBtnOnclickHandler,
     }) => {
+
+    const error = startValue < 0 || startValue >= maxValue
 
     return (
         <S.CountSet>
@@ -39,7 +37,7 @@ export const CountSet: React.FC<CountSetPropsType> = (
             <S.BtnBlock>
                 <Button content='set'
                         onClick={setBtnOnclickHandler}
-                        disabled={settingsDisabled}
+                        disabled={error}
                 />
             </S.BtnBlock>
         </S.CountSet>

@@ -1,16 +1,15 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {Button} from "../button/button";
 import {S} from './count_styles'
+import {textCountType} from "../../App";
 
 type CountPropsType = {
     incCount: (num: number) => void
     resetCount: () => void
-    count: number
+    count: textCountType | number
     plusDisabled: boolean
     resetDisabled: boolean
     maxNumber: number
-    error: boolean
-    viewHelp: boolean
 }
 
 export const Count: React.FC<CountPropsType> = (
@@ -21,34 +20,30 @@ export const Count: React.FC<CountPropsType> = (
         plusDisabled,
         resetDisabled,
         maxNumber,
-        error,
-        viewHelp
     }) => {
 
     const intCountHandler = () => {
-        incCount(count)
+        incCount(+count)
     }
     const resetCountHandler = () => {
         resetCount()
     }
     const countIsMaximal = count === maxNumber
 
-    const showText = () => {
-        if (error) {
-            return <p style={{color: 'red', fontSize: '24px'}}>
-                Incorrect value! <br/> The value cannot be lower than 0, or higher than the max value</p>
-        } else if (viewHelp) {
-            return <p style={{color: 'rgb(45, 126, 117)', fontSize: '24px'}}>
-                Enter values and press 'set'</p>
+    const showText = (): ReactNode => {
+        if (count === "Enter values") {
+            return <S.CountNumber as='p' className='help'> Enter values and press 'set'</S.CountNumber>
+        } else if (count === "Incorrect value") {
+            return <S.CountNumber as='p' className='error'>Incorrect value! <br/>
+                The value cannot be lower than 0, or higher than the max value</S.CountNumber>
         } else {
-            return <span>{count}</span>
+            return <S.CountNumber className={`count ${countIsMaximal ? 'red' : ''}`}>{count}</S.CountNumber>
         }
     }
 
     return (
         <S.Count>
-            <S.CountNumber className={`count ${countIsMaximal ? 'red' : ''}`}>{showText()}</S.CountNumber>
-
+            {showText()}
             <S.BtnBlock>
                 <Button content='+'
                         onClick={intCountHandler}
