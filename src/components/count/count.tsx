@@ -1,8 +1,8 @@
 import React from 'react';
-import {Button} from "../button/Button";
-import {S} from './Count_Styles'
+import {Button} from "../button/button";
+import {S} from './count_styles'
 
-export type CountProps = {
+type CountPropsType = {
     incCount: (num: number) => void
     resetCount: () => void
     count: number
@@ -13,24 +13,35 @@ export type CountProps = {
     viewHelp: boolean
 }
 
-export const Count = (props: CountProps) => {
+export const Count: React.FC<CountPropsType> = (
+    {
+        incCount,
+        resetCount,
+        count,
+        plusDisabled,
+        resetDisabled,
+        maxNumber,
+        error,
+        viewHelp
+    }) => {
+
     const intCountHandler = () => {
-        props.incCount(props.count)
+        incCount(count)
     }
     const resetCountHandler = () => {
-        props.resetCount()
+        resetCount()
     }
-    const countIsMaximal = props.count === props.maxNumber
+    const countIsMaximal = count === maxNumber
 
     const showText = () => {
-        if (props.error) {
+        if (error) {
             return <p style={{color: 'red', fontSize: '24px'}}>
                 Incorrect value! <br/> The value cannot be lower than 0, or higher than the max value</p>
-        } else if (props.viewHelp) {
+        } else if (viewHelp) {
             return <p style={{color: 'rgb(45, 126, 117)', fontSize: '24px'}}>
                 Enter values and press 'set'</p>
         } else {
-            return <span>{props.count}</span>
+            return <span>{count}</span>
         }
     }
 
@@ -39,13 +50,13 @@ export const Count = (props: CountProps) => {
             <S.CountNumber className={`count ${countIsMaximal ? 'red' : ''}`}>{showText()}</S.CountNumber>
 
             <S.BtnBlock>
-                <Button content={'+'}
-                        onClickHandler={intCountHandler}
-                        isDisabled={props.plusDisabled}
+                <Button content='+'
+                        onClick={intCountHandler}
+                        disabled={plusDisabled}
                 />
-                <Button content={'reset'}
-                        onClickHandler={resetCountHandler}
-                        isDisabled={props.resetDisabled}
+                <Button content='reset'
+                        onClick={resetCountHandler}
+                        disabled={resetDisabled}
                 />
             </S.BtnBlock>
         </S.Count>

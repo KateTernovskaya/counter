@@ -1,35 +1,20 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
-import {Count} from "./components/count/Count";
-import {CountSet} from "./components/countSet/CountSet";
+import {Count} from "./components/count/count";
+import {CountSet} from "./components/countSet/countSet";
+
+//Get From LocalStorage
+const maxV = localStorage.getItem('maxValue')
+const startV = localStorage.getItem('startValue')
+
 
 function App() {
     const [plusDisabled, setPlusDisabled] = useState<boolean>(false)
     const [resetDisabled, setResetDisabled] = useState<boolean>(true)
-    const [maxValue, setMaxValue] = useState<number>(1)
-    const [startValue, setStartValue] = useState<number>(0)
+    const [maxValue, setMaxValue] = useState<number>(maxV !== null ? JSON.parse(maxV) : 1)
+    const [startValue, setStartValue] = useState<number>(startV !== null ? JSON.parse(startV) : 1)
     const [count, setCount] = useState<number>(startValue)
     const [viewHelp, setViewHelp] = useState<boolean>(false)
-
-    //Get From LocalStorage
-    useEffect(() => {
-        maxValueGetFromLocalStorage()
-        startValueGetFromLocalStorage()
-    }, [])
-
-    const maxValueGetFromLocalStorage = () => {
-        const maxV = localStorage.getItem('maxValue')
-        if (maxV) {
-            setMaxValue(JSON.parse(maxV))
-        }
-    }
-    const startValueGetFromLocalStorage = () => {
-        const startV = localStorage.getItem('startValue')
-        if (startV) {
-            setStartValue(JSON.parse(startV))
-        }
-    }
-
 
     //Count
     const incCount = (num: number) => {
@@ -49,13 +34,13 @@ function App() {
     }
 
     const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMaxValue(+e.currentTarget.value)
+        setMaxValue(Math.round(+e.currentTarget.value))
         setViewHelp(true)
         setPlusDisabled(true)
         setResetDisabled(true)
     }
     const setStartValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setStartValue(+e.currentTarget.value)
+        setStartValue(Math.round(+e.currentTarget.value))
         setViewHelp(true)
         setPlusDisabled(true)
         setResetDisabled(true)
@@ -78,6 +63,7 @@ function App() {
         localStorage.setItem('startValue', JSON.stringify(startValue))
     }
 
+
     return (
         <div className="App">
             <CountSet
@@ -89,7 +75,8 @@ function App() {
                 error={error}
                 setBtnOnclickHandler={setBtnOnclickHandler}
             />
-            <Count incCount={incCount}
+            <Count
+                incCount={incCount}
                    resetCount={resetCount}
                    count={count}
                    plusDisabled={plusDisabled}
